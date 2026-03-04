@@ -7,18 +7,20 @@
 </head>
 <body>
 
-    <header>
-        <h2>Vocabulary Trainer</h2>
-    </header>
+     <header  class="app-header">
+        <h2>Vocbit</h2>
+        <p class="sub">Your daily vocabulary trainer</p>
+     </header>
 
 <main>
-    <div class="word-box">
+    <div class="word-box fade">
         <h3 id="word">Click Next</h3>
         <p id="meaning"></p>
         <p id="example" style="font-style: italic;"></p>
         <p id="synonyms"></p>
         <p id="antonyms"></p>
     </div>
+    <div id="loader" class="loader" style="display:none;"></div>
 
     <button class="btn" onclick="showRandomWord()">Next Word</button>
 <button class="btn" onclick="markAsLearned()">Mark as Learned</button>
@@ -36,6 +38,4 @@
     <script src="app.js"></script>
 
 </body>
-
-<script src="app.js"></script>
 </html>
