@@ -11,14 +11,26 @@ updateProgressUI();
 updateStreak();
 
 function showRandomWord() {
-    const randomIndex = Math.floor(Math.random() * words.length);
-    currentWord = words[randomIndex];
+    document.getElementById("loader").style.display = "block";
 
-    document.getElementById("word").innerText = currentWord.word;
-    document.getElementById("meaning").innerText = currentWord.meaning;
-    document.getElementById("example").innerText = "Example: " + currentWord.example;
-    document.getElementById("synonyms").innerText = "Synonyms: " + currentWord.synonyms.join(", ");
-    document.getElementById("antonyms").innerText = "Antonyms: " + currentWord.antonyms.join(", ");
+    setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * words.length);
+        currentWord = words[randomIndex];
+
+        document.getElementById("word").innerText = currentWord.word;
+        document.getElementById("meaning").innerText = currentWord.meaning;
+        document.getElementById("example").innerText = "Example: " + currentWord.example;
+        document.getElementById("synonyms").innerText = "Synonyms: " + currentWord.synonyms.join(", ");
+        document.getElementById("antonyms").innerText = "Antonyms: " + currentWord.antonyms.join(", ");
+
+        // Hide loader
+        document.getElementById("loader").style.display = "none";
+
+        // Trigger fade animation again
+        document.querySelector(".word-box").classList.remove("fade");
+        void document.querySelector(".word-box").offsetWidth; 
+        document.querySelector(".word-box").classList.add("fade");
+    }, 400);
 }
 
 // Mark a word as learned
