@@ -1,3 +1,17 @@
+// Ask for notification permission
+if (Notification && Notification.permission !== "granted") {
+    Notification.requestPermission();
+}
+
+function sendDailyNotification() {
+    if (Notification.permission === "granted") {
+        new Notification("Vocbit - Word of the Day", {
+            body: "Your new word is ready. Open Vocbit!",
+            icon: "icon-192.png"
+        });
+    }
+}
+
 // Track the current word
 let currentWord = null;
 
@@ -71,3 +85,6 @@ function updateStreak() {
 
     document.getElementById("streak").innerText = "Streak: " + streak + " Days";
 }
+
+// Trigger notification once every 24 hours
+setInterval(sendDailyNotification, 24 * 60 * 60 * 1000);
