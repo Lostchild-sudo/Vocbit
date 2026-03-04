@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Vocbit - Learn Vocabulary</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
@@ -17,6 +18,12 @@
             Start Learning
         </button>
     </main>
+    
+    <script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+}
+    </script>
 
 </body>
 <script src="app.js"></script>
