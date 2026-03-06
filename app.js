@@ -8,9 +8,11 @@ let words = JSON.parse(localStorage.getItem("vocbitWords")) || [];
 function displayWords() {
   wordList.innerHTML = "";
 
-  words.forEach(function(item) {
+  words.forEach(function(item, index) {
     const div = document.createElement("div");
-    div.innerHTML = "<strong>" + item.word + "</strong> : " + item.meaning;
+    div.innerHTML =
+"<strong>" + item.word + "</strong> : " + item.meaning +
+" <button onclick='deleteWord(" + index + ")'>Delete</button>";
     wordList.appendChild(div);
   });
 }
@@ -39,3 +41,13 @@ addBtn.addEventListener("click", function () {
 });
 
 displayWords();
+
+function deleteWord(index){
+
+words.splice(index,1);
+
+localStorage.setItem("vocbitWords", JSON.stringify(words));
+
+displayWords();
+
+}
