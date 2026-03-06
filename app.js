@@ -64,5 +64,4 @@ localStorage.setItem("vocbitWords", JSON.stringify(words));
 displayWords();
 
 }
-
 searchBox.addEventListener("input", displayWords);
