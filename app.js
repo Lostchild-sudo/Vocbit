@@ -1,36 +1,41 @@
-const words = [
-  { word: "abandoned", meaning: "left behind or deserted" },
-  { word: "candid", meaning: "truthful and straightforward" },
-  { word: "benevolent", meaning: "kind and generous" }
-];
-
-const wordList = document.getElementById("word-list");
 const addBtn = document.getElementById("add-btn");
 const wordInput = document.getElementById("word-input");
 const meaningInput = document.getElementById("meaning-input");
+const wordList = document.getElementById("word-list");
 
-function renderWords() {
+let words = JSON.parse(localStorage.getItem("vocbitWords")) || [];
+
+function displayWords() {
   wordList.innerHTML = "";
 
-  words.forEach(item => {
+  words.forEach(function(item) {
     const div = document.createElement("div");
-    div.className = "word-card";
-    div.innerHTML = `<h3>${item.word}</h3><p>${item.meaning}</p>`;
+    div.innerHTML = "<strong>" + item.word + "</strong> : " + item.meaning;
     wordList.appendChild(div);
   });
 }
 
-addBtn.addEventListener("click", () => {
+addBtn.addEventListener("click", function () {
+
   const word = wordInput.value;
   const meaning = meaningInput.value;
 
-  if(word && meaning){
-    words.push({word, meaning});
-    renderWords();
-
-    wordInput.value = "";
-    meaningInput.value = "";
+  if(word === "" || meaning === ""){
+    alert("Enter word and meaning");
+    return;
   }
+
+  const newWord = { word, meaning };
+
+  words.push(newWord);
+
+  localStorage.setItem("vocbitWords", JSON.stringify(words));
+
+  displayWords();
+
+  wordInput.value = "";
+  meaningInput.value = "";
+
 });
 
-renderWords();
+displayWords();
