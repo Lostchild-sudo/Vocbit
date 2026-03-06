@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Vocbit - Learn Vocabulary</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
+
+<title>Vocbit</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-    <header>
-        <h1>Vocbit</h1>
-        <p>Learn vocabulary fast and smart.</p>
-    </header>
+<div class="container">
 
-    <main>
-        <button onclick="window.location.href='chat.html'" class="btn">
-            Start Learning
-        </button>
-    </main>
-    
-    <script>
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-}
-    </script>
+<h1>Vocbit</h1>
+
+<p>Learn new vocabulary every day</p>
+
+<div class="input-area">
+
+<input type="text" id="word-input" placeholder="Enter word">
+
+<input type="text" id="meaning-input" placeholder="Enter meaning">
+
+<button id="add-btn">Add Word</button>
+
+</div>
+
+<div id="word-list"></div>
+
+</div>
+
+<script src="app.js"></script>
 
 </body>
-<script src="app.js"></script>
+
 </html>
