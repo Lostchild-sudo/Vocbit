@@ -3,6 +3,7 @@ const wordInput = document.getElementById("word-input");
 const meaningInput = document.getElementById("meaning-input");
 const wordList = document.getElementById("word-list");
 const searchBox = document.getElementById("search-box");
+const quizBtn = document.getElementById("quiz-btn");
 
 let words = JSON.parse(localStorage.getItem("vocbitWords")) || [];
 
@@ -65,3 +66,30 @@ displayWords();
 
 }
 searchBox.addEventListener("input", displayWords);
+
+quizBtn.addEventListener("click", function(){
+
+if(words.length === 0){
+alert("No words available for quiz");
+return;
+}
+
+const randomIndex = Math.floor(Math.random() * words.length);
+
+const questionWord = words[randomIndex].word;
+
+const correctAnswer = words[randomIndex].meaning;
+
+const userAnswer = prompt("What is the meaning of: " + questionWord);
+
+if(userAnswer === null){
+return;
+}
+
+if(userAnswer.toLowerCase() === correctAnswer.toLowerCase()){
+alert("Correct!");
+}else{
+alert("Wrong! Correct answer: " + correctAnswer);
+}
+
+});
