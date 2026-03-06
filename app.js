@@ -1,90 +1,36 @@
-// Ask for notification permission
-if (Notification && Notification.permission !== "granted") {
-    Notification.requestPermission();
+const words = [
+  { word: "abandoned", meaning: "left behind or deserted" },
+  { word: "candid", meaning: "truthful and straightforward" },
+  { word: "benevolent", meaning: "kind and generous" }
+];
+
+const wordList = document.getElementById("word-list");
+const addBtn = document.getElementById("add-btn");
+const wordInput = document.getElementById("word-input");
+const meaningInput = document.getElementById("meaning-input");
+
+function renderWords() {
+  wordList.innerHTML = "";
+
+  words.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "word-card";
+    div.innerHTML = `<h3>${item.word}</h3><p>${item.meaning}</p>`;
+    wordList.appendChild(div);
+  });
 }
 
-function sendDailyNotification() {
-    if (Notification.permission === "granted") {
-        new Notification("Vocbit - Word of the Day", {
-            body: "Your new word is ready. Open Vocbit!",
-            icon: "icon-192.png"
-        });
-    }
-}
+addBtn.addEventListener("click", () => {
+  const word = wordInput.value;
+  const meaning = meaningInput.value;
 
-// Track the current word
-let currentWord = null;
+  if(word && meaning){
+    words.push({word, meaning});
+    renderWords();
 
-// Load progress from localStorage
-let learnedWords = JSON.parse(localStorage.getItem("learnedWords")) || [];
-let streak = parseInt(localStorage.getItem("streak")) || 0;
-let lastOpenDate = localStorage.getItem("lastOpenDate");
+    wordInput.value = "";
+    meaningInput.value = "";
+  }
+});
 
-// Update UI with saved progress
-updateProgressUI();
-updateStreak();
-
-function showRandomWord() {
-    document.getElementById("loader").style.display = "block";
-
-    setTimeout(() => {
-        const randomIndex = Math.floor(Math.random() * words.length);
-        currentWord = words[randomIndex];
-
-        document.getElementById("word").innerText = currentWord.word;
-        document.getElementById("meaning").innerText = currentWord.meaning;
-        document.getElementById("example").innerText = "Example: " + currentWord.example;
-        document.getElementById("synonyms").innerText = "Synonyms: " + currentWord.synonyms.join(", ");
-        document.getElementById("antonyms").innerText = "Antonyms: " + currentWord.antonyms.join(", ");
-
-        // Hide loader
-        document.getElementById("loader").style.display = "none";
-
-        // Trigger fade animation again
-        document.querySelector(".word-box").classList.remove("fade");
-        void document.querySelector(".word-box").offsetWidth; 
-        document.querySelector(".word-box").classList.add("fade");
-    }, 400);
-}
-
-// Mark a word as learned
-function markAsLearned() {
-    if (!currentWord) return;
-
-    if (!learnedWords.includes(currentWord.word)) {
-        learnedWords.push(currentWord.word);
-
-        // Save progress
-        localStorage.setItem("learnedWords", JSON.stringify(learnedWords));
-
-        updateProgressUI();
-    }
-}
-
-// Update learned count
-function updateProgressUI() {
-    document.getElementById("learnedCount").innerText =
-        "Learned Words: " + learnedWords.length;
-}
-
-// Daily streak system
-function updateStreak() {
-    const today = new Date().toDateString();
-
-    if (lastOpenDate !== today) {
-        // Increase streak if visited yesterday
-        if (lastOpenDate === new Date(Date.now() - 86400000).toDateString()) {
-            streak++;
-        } else {
-            streak = 1; // reset streak
-        }
-
-        localStorage.setItem("streak", streak);
-        localStorage.setItem("lastOpenDate", today);
-    }
-
-    document.getElementById("streak").innerText = "Streak: " + streak + " Days";
-}
-
-// Trigger notification once every 24 hours
-setInterval(sendDailyNotification, 24 * 60 * 60 * 1000);
+renderWords();
